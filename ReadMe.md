@@ -2,22 +2,23 @@
 
 ## Install denpendencies:
 ```bash
-npm i express ejs socket.io uuid
-npm i --save-dev nodemon
+npm i express ejs socket.io uuid https
 
-sudo npm i -g nodemon
 sudo npm i -g peer
 
 ```
 
-## How to run
+## Install local SSL for local https service:
+  Reference: <a href='https://github.com/bumblezhou/local_ssl_with_websocket?tab=readme-ov-file#1-generate-the-private-key-to-become-a-local-ca'>Generate CA, key, cert file for testing ssl use in a nodejs site</a>
+
+## How to run:
 ```bash
 [terminal 1]
-peerjs --port 3001
+peerjs --port 3001 --sslkey ./jackzhou.me.key --sslcert ./jackzhou.me.crt
 
 [terminal 2]
-nodemon server.js
+sudo node server.js
 ```
 
 [browser]
-http://localhost:3000
+https://jackzhou.me

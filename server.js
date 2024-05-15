@@ -1,7 +1,5 @@
 const express = require('express')
 const app = express()
-const server = require('http').Server(app)
-const io = require('socket.io')(server)
 const { v4: uuidv4 } = require('uuid')
 
 app.set('view engine', 'ejs')
@@ -14,6 +12,18 @@ app.get('/', (req, res) => {
 app.get('/:room', (req, res) => {
     res.render('room', {roomId: req.params.room})
 })
+
+const https = require('https');
+const path = require('path');
+const socketio = require('socket.io');
+const fs = require('fs');
+// Path to your SSL certificate and key files
+const options = {
+    key: fs.readFileSync(path.join(__dirname, 'jackzhou.me.key')),
+    cert: fs.readFileSync(path.join(__dirname, 'jackzhou.me.crt'))
+}
+const server = https.createServer(options, app)
+const io = socketio(server)
 
 io.on('connection', socket => {
     var temp_room_id, temp_user_id;
@@ -30,4 +40,4 @@ io.on('connection', socket => {
     })
 })
 
-server.listen(3000)
+server.listen(443)
